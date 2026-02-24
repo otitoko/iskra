@@ -5,6 +5,8 @@
 
 #include "builtins/echo.h"
 
+
+
 int print_prompt(){
 
 	char* username = getenv("USER");
@@ -15,13 +17,25 @@ int print_prompt(){
 	return 0;
 }
 
+int parse_input(char* s){
+	char* token = strtok(s," ");
+
+	while(token != NULL){
+
+	printf("%s", token);
+	token = strtok(NULL," ");
+	}
+
+	return 0;
+}
+
 int main(){
 	while(1){
 		
 		print_prompt();
 		char s[64];
 		fgets(s,sizeof(s)-1,stdin);
-		strtok(s," ");
+		parse_input(s);
 	}
 
 	return 0;

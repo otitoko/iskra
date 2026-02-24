@@ -3,8 +3,8 @@
 #include "builtins/echo.h"
 
 
-int echo(char* string){
-	printf("%s", string);
+int echo(char* argv){
+	printf("%s", argv);
 
 	return 0;
 }
