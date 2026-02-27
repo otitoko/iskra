@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "builtins/echo.h"
+#include "builtins/parsing.h"
 
 char* builtin_str[] = {
 	"echo"
