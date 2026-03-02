@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
 
 #include "builtins/parsing.h"
 
-
+//take input as s and return pointer to tokens
 char** parse_input(char* s){
 
         int index = 0;
