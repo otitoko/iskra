@@ -32,5 +32,7 @@ char** parse_input(char* s){
         index++;
         }
 
+	tokens[index] = NULL;
+
         return tokens;
 }
