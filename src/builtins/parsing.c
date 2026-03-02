@@ -11,8 +11,7 @@ char** parse_input(char* s){
         int buf_size = 0;
 
         if(s == NULL){
-                //end
-        //      return s;
+		return NULL;
         }
         char* token = strtok(s," ");
 
@@ -31,8 +30,9 @@ char** parse_input(char* s){
         buf_size+=sizeof(char*);
         index++;
         }
-
-	tokens[index] = NULL;
+	
+	//lets binaries get executed with execl but introduces bug wherein realloc breaks
+//	tokens[index] = NULL;
 
         return tokens;
 }
