@@ -32,6 +32,7 @@ int main(){
 		print_prompt();
 		char s[64];
 		fgets(s,sizeof(s)-1,stdin);
+		s[strcspn(s, "\n")] = 0;
 		char **tokens = parse_input(s);
 		int i = 0, j = 0;
 		do { 
