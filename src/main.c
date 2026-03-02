@@ -23,6 +23,7 @@ int main(){
 		char *s = NULL;
 		size_t len = 0;
 		getline(&s, &len, stdin);
+		s[strcspn(s, "\n")] = 0;
 	//	recv_input(s);
 		char **tokens = parse_input(s);
 		int i = 0, j = 0;
@@ -33,7 +34,6 @@ int main(){
 					i++;
 				}
 				else{
-					s[strcspn(s, "\n")] = 0;
 					exec_ext_cmd(tokens);
 					i++;
 				}
