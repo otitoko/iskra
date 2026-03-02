@@ -5,6 +5,7 @@
 
 #include "builtins/echo.h"
 #include "builtins/parsing.h"
+#include "builtins/exec_cmd.h"
 
 char* builtin_str[] = {
 	"echo"
@@ -24,14 +25,6 @@ int print_prompt(){
 	return 0;
 }
 
-void exec_cmd(int (*cmd)(char*), char* args){
-
-	if(cmd==NULL){
-//		return 0;
-	}
-
-	cmd(args);
-}
 
 int main(){
 	while(1){
@@ -40,11 +33,19 @@ int main(){
 		char s[64];
 		fgets(s,sizeof(s)-1,stdin);
 		char **tokens = parse_input(s);
-		int i = 0;
+		int i = 0, j = 0;
 		do { 
-			if(strcmp(tokens[i], builtin_str[0]) == 0){
-				exec_cmd(builtin_functions[0], tokens[i+1]);
-			}
+			do {
+				if(strcmp(tokens[i], builtin_str[j]) == 0){
+					exec_builtin(builtin_functions[j], tokens[i+1]);
+					i++;
+				}
+				else{
+					exec_ext_cmd(tokens);
+					i++;
+				}
+			j++;
+			} while (builtin_str[j] != NULL);
 			i++;
 		} while (tokens[i] != NULL);
 	}
