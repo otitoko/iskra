@@ -18,8 +18,9 @@ int (*builtin_functions[]) (char*) = {
 
 int main(){
 	while(1){
-		
+
 		print_prompt();
+
 		char *s = NULL;
 		size_t len = 0;
 		getline(&s, &len, stdin);
