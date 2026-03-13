@@ -17,7 +17,6 @@ void exec_builtin(int (*cmd)(char*), char* args){
 void exec_ext_cmd(char** args){
 
 	int pid = fork();
-//	char* full_path = strcat("/bin/", path);
 	if( pid == 0 ){
 		execvp(args[0], args);
 	}
