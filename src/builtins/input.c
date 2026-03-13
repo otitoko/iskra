@@ -1,14 +1,16 @@
 #include <stdlib.h>
 #include <stdio.h>
+#include <unistd.h>
 
 #include "builtins/input.h"
 
 int print_prompt(){
 
         char* username = getenv("USER");
-        char* pwd = getenv("PWD");
+        char cwd[1024];
+        getcwd(cwd, sizeof(cwd));
 
-        printf("%s@%s# ",username, pwd);
+        printf("%s@%s# ",username, cwd);
 
         return 0;
 }
