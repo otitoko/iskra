@@ -1,22 +1,26 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
 
-#include "builtins/input.h"
+#include "input/input.h"
 
 int print_prompt(){
 
-        char* username = getenv("USER");
-        char cwd[1024];
-        getcwd(cwd, sizeof(cwd));
+    char* username = getenv("USER");
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
 
-        printf("%s@%s# ",username, cwd);
+    printf("%s@%s# ",username, cwd);
 
-        return 0;
+    return 0;
 }
 
 char* recv_input(char* buf){
-	fgets(buf,sizeof(buf)-1,stdin);
+    size_t len = 0;
+    getline(&buf, &len, stdin);
 
-	return buf;
+    buf[strcspn(buf, "\n")] = 0;
+
+    return buf;
 }

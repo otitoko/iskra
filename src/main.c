@@ -2,57 +2,29 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #include "builtins/echo.h"
-#include "builtins/parsing.h"
+#include "parsing/parsing.h"
 #include "builtins/exec_cmd.h"
-#include "builtins/input.h"
+#include "input/input.h"
 #include "builtins/cd.h"
+#include "builtins/builtins.h"
 
-#define NUM_BUILTINS 2
 
-char* builtin_str[] = {
-    "echo",
-    "cd"
-
-};
-
-int (*builtin_functions[]) (char*) = {
-    &echo,
-    &cd
-};
 
 int main(){
     while(1){
 
         print_prompt();
 
-        char *s = NULL;
-        size_t len = 0;
-        getline(&s, &len, stdin);
-        s[strcspn(s, "\n")] = 0;
-        //	recv_input(s);
-        char **tokens = parse_input(s);
-        int token = 0;
-        int is_builtin = 0;
+        char *user_input = NULL;
 
-        do { 
+        user_input = recv_input(user_input);
 
-            for(int index_builtins = 0; index_builtins < NUM_BUILTINS; index_builtins++){
-                
-                if(strcmp(tokens[token], builtin_str[index_builtins]) == 0){
-                    exec_builtin(builtin_functions[index_builtins], tokens[token+1]);
-                    is_builtin = 1;
-                    break;
-                }
+        char **tokens = parse_input(user_input);
+        eval_cmd(tokens);
 
-            }
-
-            if(!is_builtin){
-                exec_ext_cmd(tokens);
-            }
-            token++;
-        } while (tokens[token] != NULL);
         free(tokens);
     }
 
