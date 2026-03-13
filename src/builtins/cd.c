@@ -1,13 +1,20 @@
 #include <unistd.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #include "builtins/cd.h"
 
 int cd(char* argv){
-    if(argv == NULL){
-    } 
+    int ret_val = 0;
 
-    int ret_val = chdir(argv);
+    if(argv == NULL){
+        char* home_dir = getenv("HOME");
+        ret_val = chdir(home_dir);
+    } 
+    else{
+        ret_val = chdir(argv);
+    }
+
 
     if (ret_val < 0){
         printf("something");
