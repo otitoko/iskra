@@ -30,11 +30,5 @@ char** parse_input(char* s){
         buf_size+=sizeof(char*);
         index++;
     }
-
-    //lets binaries get executed with execl but introduces bug wherein realloc breaks
-    //	tokens[index] = NULL;
-
     return tokens;
 }
-
-
