@@ -13,7 +13,7 @@ int cd(int argc, char** argv){
         return 1;
     }
 
-    if(argc == 1){
+    if(argc == 1 || argv[1] == NULL){
         char* home_dir = getenv("HOME");
         ret_val = chdir(home_dir);
     } 

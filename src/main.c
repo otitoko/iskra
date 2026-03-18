@@ -23,8 +23,9 @@ int main(){
         user_input = recv_input(user_input);
 
         char **tokens = parse_input(user_input);
-        //change this ASAP
-        eval_cmd(2, tokens);
+
+        int num_tokens = count_tokens(tokens);
+        eval_cmd(num_tokens, tokens);
 
         free(tokens);
     }

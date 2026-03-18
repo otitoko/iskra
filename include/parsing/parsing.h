@@ -2,7 +2,11 @@
 #define PARSING_H
 
 char** parse_input(char* s);
-char** tokenize(char* s);
+int count_tokens(char** tokens);
 
+struct tuple{
+    int argc;
+    char** argv;
+};
 
 #endif
