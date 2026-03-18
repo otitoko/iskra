@@ -3,11 +3,18 @@
 #include "builtins/echo.h"
 
 
-int echo(char* argv){
-    if(argv == NULL){
+int echo(int argc,char** argv){
+    if(argc < 1){
         return 1;
     }
-	printf("%s\n", argv);
+    for(int i = 1; i < argc; i++){
+
+
+        printf("%s", argv[i]);
+        printf(" ");
+    }
+
+    printf("\n");
 
 	return 0;
 }

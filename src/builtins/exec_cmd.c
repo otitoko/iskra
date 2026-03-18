@@ -11,28 +11,28 @@
 #include "misc/error_related.h"
 
 extern char* builtin_str[];
-extern int (*builtin_functions[])(char*);
+extern int (*builtin_functions[])(int, char**);
 extern const int NUM_BUILTINS;
 
-int exec_builtin(int (*cmd)(char*), char* args){
+int exec_builtin(int (*cmd)(int, char**),int argc, char** argv){
 
     if(cmd == NULL){
         //		return 1;
     }
 
-    cmd(args);
+    cmd(argc, argv);
 
     return 0;
 }
 
 //implement proper error handling
-int exec_ext_cmd(char** args){
+int exec_ext_cmd(char** argv){
 
     int pid = fork();
     int status;
 
     if( pid == 0 ){
-        execvp(args[0], args);
+        execvp(argv[0], argv);
     }
     else{
         waitpid(pid, &status, 0);
@@ -45,19 +45,17 @@ int exec_ext_cmd(char** args){
 
 }
 
-int eval_cmd(char** args){
+int eval_cmd(int argc, char** argv){
 
-    if (args == NULL){
+    if (argc < 1){
         return 1;
     }
 
     for(int index_builtins = 0; index_builtins < NUM_BUILTINS; index_builtins++){
-        if(!null_check(args[0])){
-            if(strcmp(args[0], builtin_str[index_builtins]) == 0){
-                return exec_builtin(builtin_functions[index_builtins], args[1]);
-            }
+        if(strcmp(argv[0], builtin_str[index_builtins]) == 0){
+            return exec_builtin(builtin_functions[index_builtins], argc , argv);
         }
     }
 
-    return exec_ext_cmd(args);
+    return exec_ext_cmd(argv);
 }

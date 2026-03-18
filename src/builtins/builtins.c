@@ -9,7 +9,7 @@ char* builtin_str[] = {
     "cd"
 };
 
-int (*builtin_functions[])(char*) = {
+int (*builtin_functions[])(int, char**) = {
     &echo,
     &cd
 };

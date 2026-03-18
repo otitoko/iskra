@@ -4,15 +4,21 @@
 
 #include "builtins/cd.h"
 
-int cd(char* argv){
+int cd(int argc, char** argv){
+
     int ret_val;
 
-    if(argv == NULL){
+    if (argc > 2){
+        printf("cd: too many args");
+        return 1;
+    }
+
+    if(argc == 1){
         char* home_dir = getenv("HOME");
         ret_val = chdir(home_dir);
     } 
     else{
-        ret_val = chdir(argv);
+        ret_val = chdir(argv[1]);
     }
 
 
