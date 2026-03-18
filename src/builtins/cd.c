@@ -5,7 +5,7 @@
 #include "builtins/cd.h"
 
 int cd(char* argv){
-    int ret_val = 0;
+    int ret_val;
 
     if(argv == NULL){
         char* home_dir = getenv("HOME");
@@ -17,7 +17,7 @@ int cd(char* argv){
 
 
     if (ret_val < 0){
-        printf("something");
+        printf("cd error");
     }
 
     return ret_val;

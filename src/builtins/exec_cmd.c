@@ -54,7 +54,7 @@ int eval_cmd(char** args){
     for(int index_builtins = 0; index_builtins < NUM_BUILTINS; index_builtins++){
         if(!null_check(args[0])){
             if(strcmp(args[0], builtin_str[index_builtins]) == 0){
-                return exec_builtin(builtin_functions[index_builtins], args[index_builtins+1]);
+                return exec_builtin(builtin_functions[index_builtins], args[1]);
             }
         }
     }
