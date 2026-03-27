@@ -7,6 +7,7 @@
 #include "builtins/exec_cmd.h"
 #include "builtins/echo.h"
 #include "builtins/cd.h"
+#include "builtins/exit.h"
 #include "builtins/builtins.h"
 #include "misc/error_related.h"
 
