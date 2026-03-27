@@ -21,6 +21,7 @@ int main(){
 
         char *user_input = NULL;
 
+
         user_input = recv_input(user_input);
 
         char **tokens = tokenize(user_input);
@@ -29,7 +30,9 @@ int main(){
         
 
         int symbol = check_tokens(tokens);
-        eval_redirect(symbol, NULL, tokens, tokens[3]);
+        int redirect = find_upper(tokens);
+        printf("the redirect param is %s\n", tokens[redirect+1]); 
+        eval_redirect(symbol, NULL, tokens, tokens[redirect+1]);
         eval_cmd(num_tokens, tokens);
 
         free(tokens);

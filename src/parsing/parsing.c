@@ -13,7 +13,7 @@ char* manip_str[] = {
     "&&"
 };
 
-int (*manip_functions[])(char**, char*, int, int) = {
+int (*manip_functions[])(char**, char*) = {
     &redirect_string
 };
 
@@ -60,16 +60,42 @@ int count_tokens(char** tokens){
 
     return index;
 }
-
-int redirect_string(char** strarr, char* redirect, int lower, int upper){
-    int len = 0;
-    for (int i = 0; i < count_tokens(strarr); i++){
-        len+=strlen(strarr[i]);
+char* return_string(char** tokens, int lower, int upper){
+    char* str = malloc(1*sizeof(char));
+    str[0] = '\0';
+    int old_size = 0;
+    int extra_size;
+    for(int i = lower; i < upper; i++){
+       //append tokens[i] to str val 
+      extra_size = strlen(tokens[i]); 
+      str = realloc(str, old_size+extra_size+1);
+      strcpy(str+old_size, tokens[i]);
+      old_size+=extra_size;
     }
 
+    return str;
+}
 
-   // char* string = (char*) malloc((len*sizeof(char))+1);
-    char* string = strarr[1];
+int find_upper(char** tokens){
+    int i = 0;
+    while(tokens[i] != NULL){
+        for(int j = 0; j < MANIP_STR_NUM; j++){
+
+            if(strcmp(tokens[i], manip_str[j]) == 0){
+                return i;
+            }
+        }
+    i++;
+    }
+
+    return 0;
+}
+
+
+int redirect_string(char** tokens, char* redirect){
+    int lower = 1;
+    int upper = find_upper(tokens);
+    char* string = return_string(tokens,lower, upper);
 
     FILE* fileptr;
 
@@ -122,9 +148,10 @@ int check_tokens(char** tokens){
     }
 }
 
+//idk maybe remove string param
 int eval_redirect(int symbol,char* string, char** tokens, char* redirect){
     if(symbol == 0){
-        return redirect_string(tokens, redirect, 0, 0);
+        return redirect_string(tokens, redirect);
     }
     if(symbol == 1){}
     if(symbol == 2){}
