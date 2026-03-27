@@ -71,6 +71,10 @@ char* return_string(char** tokens, int lower, int upper){
       str = realloc(str, old_size+extra_size+1);
       strcpy(str+old_size, tokens[i]);
       old_size+=extra_size;
+      if(i+1 < upper){
+          str[old_size] = ' ';
+          old_size++;
+      }
     }
 
     return str;
