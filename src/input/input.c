@@ -18,7 +18,10 @@ int print_prompt(){
 
 char* recv_input(char* buf){
     size_t len = 0;
-    getline(&buf, &len, stdin);
+    ssize_t input = getline(&buf, &len, stdin);
+    if(input == -1){
+        exit(1);
+    }
  
     buf[strcspn(buf, "\n")] = '\0';
 
