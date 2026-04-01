@@ -31,7 +31,7 @@ int main(){
 
         int symbol = check_tokens(tokens);
         int redirect = find_upper(tokens);
-        printf("the redirect param is %s\n", tokens[redirect+1]); 
+
         eval_redirect(symbol, NULL, tokens, tokens[redirect+1]);
         eval_cmd(num_tokens, tokens);
 
