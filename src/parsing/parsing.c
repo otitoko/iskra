@@ -14,7 +14,7 @@ char* manip_str[] = {
 };
 
 int (*manip_functions[])(char**, char*) = {
-    &redirect_string
+    &redirect_output
 };
 
 //take input as s and return pointer to tokens
@@ -96,7 +96,7 @@ int find_upper(char** tokens){
 }
 
 
-int redirect_string(char** tokens, char* redirect){
+int redirect_output(char** tokens, char* redirect){
     int lower = 1;
     int upper = find_upper(tokens);
     char* string = return_string(tokens,lower, upper);
@@ -104,13 +104,17 @@ int redirect_string(char** tokens, char* redirect){
     FILE* fileptr;
 
     fileptr = fopen(redirect, "w");
+    int fd = fileno(fileptr);
 
-
+    int saved_state = dup(1);
+    dup2(fd, 1);
+/*
     int data_written = fwrite(string,sizeof(char), strlen(string), fileptr);
 
     if(strlen(string) != data_written){
         printf("String not written fully");
     }
+    */
     fclose(fileptr);
     return 0;
 }
@@ -155,7 +159,7 @@ int check_tokens(char** tokens){
 //idk maybe remove string param
 int eval_redirect(int symbol,char* string, char** tokens, char* redirect){
     if(symbol == 0){
-        return redirect_string(tokens, redirect);
+        return redirect_output(tokens, redirect);
     }
     if(symbol == 1){}
     if(symbol == 2){}
@@ -165,4 +169,31 @@ int eval_redirect(int symbol,char* string, char** tokens, char* redirect){
 
     return 0;
     
+}
+
+int reset_fd(int saved_state){
+    dup2(saved_state,1);
+
+    return 0;
+}
+
+char** trim_tokens(int argc, char** argv){
+    char** tokens = malloc(argc * sizeof(char*));
+    int skip = 0;
+
+    for(int i = 0; i < argc; i++){
+        for(int j = 0; j < MANIP_STR_NUM; j++){
+            if((strcmp(argv[i], manip_str[j]) == 0) || (skip == 1)){
+                tokens[i] = NULL;
+                skip = 1;
+                break;
+            }
+            else{
+                tokens[i] = malloc(strlen(argv[i]) +1);
+                strcpy(tokens[i], argv[i]);
+            }
+        }
+    }
+
+    return tokens;
 }
