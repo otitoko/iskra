@@ -97,16 +97,15 @@ int find_upper(char** tokens){
 
 
 int redirect_output(char** tokens, char* redirect){
-    int lower = 1;
+/*    int lower = 1;
     int upper = find_upper(tokens);
     char* string = return_string(tokens,lower, upper);
-
+*/
     FILE* fileptr;
 
     fileptr = fopen(redirect, "w");
     int fd = fileno(fileptr);
 
-    int saved_state = dup(1);
     dup2(fd, 1);
 /*
     int data_written = fwrite(string,sizeof(char), strlen(string), fileptr);

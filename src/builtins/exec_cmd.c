@@ -41,6 +41,7 @@ int exec_ext_cmd(char** argv){
     if(WIFEXITED(status)){
         int exit_status = WEXITSTATUS(status);
         //printf("Child exit code: %d", exit_status);
+        return exit_status;
     }
 
     return 0;
