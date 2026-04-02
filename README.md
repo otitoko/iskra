@@ -4,5 +4,6 @@ A POSIX shell written in C.
 
 Features
 - Functional builtins
-- Basic command parsing
+- Command parsing
 - Tiny footprint
+- Output redirection
