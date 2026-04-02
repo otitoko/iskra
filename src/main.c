@@ -16,6 +16,7 @@
 
 int main(){
     while(1){
+        int saved_state = dup(1);
 
         print_prompt();
 
@@ -32,10 +33,15 @@ int main(){
         int symbol = check_tokens(tokens);
         int redirect = find_upper(tokens);
 
+        char** trimmed_tokens = trim_tokens(num_tokens,tokens);
+
         eval_redirect(symbol, NULL, tokens, tokens[redirect+1]);
-        eval_cmd(num_tokens, tokens);
+        eval_cmd(num_tokens, trimmed_tokens);
+
+        reset_fd(saved_state);
 
         free(tokens);
+        free(trimmed_tokens);
 
     }
 
