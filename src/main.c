@@ -37,6 +37,10 @@ int main(){
         char** trimmed_tokens = trim_tokens(num_tokens,tokens);
 
         eval_redirect(symbol, NULL, tokens, tokens[redirect+1]);
+        
+        if(redirect > 0){
+            num_tokens = redirect;
+        }
         eval_cmd(num_tokens, trimmed_tokens);
 
         reset_fd(saved_in, 0);

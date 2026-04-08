@@ -97,23 +97,13 @@ int find_upper(char** tokens){
 
 
 int redirect_output(char** tokens, char* redirect){
-/*    int lower = 1;
-    int upper = find_upper(tokens);
-    char* string = return_string(tokens,lower, upper);
-*/
     FILE* fileptr;
 
     fileptr = fopen(redirect, "w");
     int fd = fileno(fileptr);
 
     dup2(fd, 1);
-/*
-    int data_written = fwrite(string,sizeof(char), strlen(string), fileptr);
 
-    if(strlen(string) != data_written){
-        printf("String not written fully");
-    }
-    */
     fclose(fileptr);
     return 0;
 }
@@ -189,6 +179,7 @@ int reset_fd(int saved_state, int stream){
     return 0;
 }
 
+//adds NULL pointers to tokens
 char** trim_tokens(int argc, char** argv){
     char** tokens = malloc(argc * sizeof(char*));
     int skip = 0;
