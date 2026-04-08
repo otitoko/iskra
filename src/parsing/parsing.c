@@ -108,10 +108,23 @@ int redirect_output(char** tokens, char* redirect){
     return 0;
 }
 
+int append_output(char** tokens, char* redirect){
+    FILE* fileptr;
+
+    fileptr = fopen(redirect, "a");
+    int fd = fileno(fileptr);
+
+    dup2(fd, 1);
+
+    fclose(fileptr);
+    return 0;
+
+}
+
 int redirect_input(char** tokens, char* redirect){
     FILE* fileptr;
 
-    fileptr = fopen(redirect, "w");
+    fileptr = fopen(redirect, "r");
     int fd = fileno(fileptr);
 
     dup2(fd, 0);
@@ -120,6 +133,7 @@ int redirect_input(char** tokens, char* redirect){
     return 0;
 
 }
+
 
 
 int redirect_check(char* arg){
@@ -163,8 +177,12 @@ int eval_redirect(int symbol,char* string, char** tokens, char* redirect){
     if(symbol == 0){
         return redirect_output(tokens, redirect);
     }
-    if(symbol == 1){}
-    if(symbol == 2){}
+    if(symbol == 1){
+        return redirect_input(tokens, redirect);
+    }
+    if(symbol == 2){
+        return append_output(tokens, redirect);
+                }
     if(symbol == 3){}
     if(symbol == 4){}
 

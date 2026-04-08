@@ -7,6 +7,7 @@ char** tokenize(char* s);
 int count_tokens(char** tokens);
 int redirect_output(char** strarr, char* redirect);
 int redirect_input(char** strarr, char* redirect);
+int append_output(char** tokens, char* redirect);
 int check_tokens(char** tokens);
 int eval_redirect(int symbol,char* string, char** tokens, char* redirect);
 char* return_string(char** tokens, int lower, int upper);
