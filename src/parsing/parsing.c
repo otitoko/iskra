@@ -118,6 +118,19 @@ int redirect_output(char** tokens, char* redirect){
     return 0;
 }
 
+int redirect_input(char** tokens, char* redirect){
+    FILE* fileptr;
+
+    fileptr = fopen(redirect, "w");
+    int fd = fileno(fileptr);
+
+    dup2(fd, 0);
+
+    fclose(fileptr);
+    return 0;
+
+}
+
 
 int redirect_check(char* arg){
     for (int i = 0; i < MANIP_STR_NUM; i++){
@@ -170,8 +183,8 @@ int eval_redirect(int symbol,char* string, char** tokens, char* redirect){
     
 }
 
-int reset_fd(int saved_state){
-    dup2(saved_state,1);
+int reset_fd(int saved_state, int stream){
+    dup2(saved_state,stream);
 
     return 0;
 }
