@@ -18,9 +18,6 @@ int main(){
     while(1){
         int saved_out = dup(1);
         int saved_in = dup(0);
-
-        print_prompt();
-
         char *user_input = NULL;
 
 
@@ -41,6 +38,7 @@ int main(){
         if(redirect > 0){
             num_tokens = redirect;
         }
+        
         eval_cmd(num_tokens, trimmed_tokens);
 
         reset_fd(saved_in, 0);

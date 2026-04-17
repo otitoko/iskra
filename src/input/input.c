@@ -5,7 +5,14 @@
 
 #include "input/input.h"
 
-int print_prompt(){
+#include "readline/readline.h"
+#include "readline/history.h"
+
+#define HISTORY_SIZE 10
+
+char* history[10];
+
+int get_prompt(){
 
     char* username = getenv("USER");
     char cwd[1024];
@@ -17,13 +24,9 @@ int print_prompt(){
 }
 
 char* recv_input(char* buf){
-    size_t len = 0;
-    ssize_t input = getline(&buf, &len, stdin);
-    if(input == -1){
-        exit(1);
-    }
- 
-    buf[strcspn(buf, "\n")] = '\0';
+
+    buf = readline("harc@coded> ");
 
     return buf;
 }
+

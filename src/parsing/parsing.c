@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 #include "parsing/parsing.h"
+#include "readline/history.h"
 
 char* manip_str[] = {
     ">",
@@ -27,12 +28,14 @@ char** tokenize(char* s){
     if(s == NULL){
         perror("empty string\n");
     }
+    add_history(s);
     char* token = strtok(s," ");
 
     char** tokens = malloc(sizeof(char*));
     buf_size+=sizeof(char*);
 
     tokens[0] = token;
+
     index++;
     num_tokens++;
 
@@ -47,7 +50,6 @@ char** tokenize(char* s){
         num_tokens++;
     }
 
-
     return tokens;
 }
 
@@ -57,8 +59,8 @@ int count_tokens(char** tokens){
     while(tokens[index] != NULL){
         index++;
     }
-
-    return index;
+    //don't forget about the null pointer
+    return index+1;
 }
 char* return_string(char** tokens, int lower, int upper){
     char* str = malloc(1*sizeof(char));
@@ -199,22 +201,28 @@ int reset_fd(int saved_state, int stream){
 
 //adds NULL pointers to tokens
 char** trim_tokens(int argc, char** argv){
-    char** tokens = malloc(argc * sizeof(char*));
-    int skip = 0;
-
+    char** tokens = calloc(argc+1, sizeof(char*));
+    int k = 0;
     for(int i = 0; i < argc; i++){
+
+            if(argv[i] == NULL){
+                continue;
+            }
+
+            int is_manip = 0;
+
+            
         for(int j = 0; j < MANIP_STR_NUM; j++){
-            if((strcmp(argv[i], manip_str[j]) == 0) || (skip == 1)){
-                tokens[i] = NULL;
-                skip = 1;
+
+            if(strcmp(argv[i], manip_str[j]) == 0){
+                is_manip = 1;
                 break;
             }
-            else{
-                tokens[i] = malloc(strlen(argv[i]) +1);
-                strcpy(tokens[i], argv[i]);
-            }
         }
+            if(!is_manip){
+                tokens[k++] = strdup(argv[i]);
+            }
     }
-
+    tokens[k] = NULL;
     return tokens;
 }
