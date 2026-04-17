@@ -25,8 +25,8 @@ char** tokenize(char* s){
     int index = 0;
     int buf_size = 0;
 
-    if(s == NULL){
-        perror("empty string\n");
+    if(!strcmp(s, "")){
+        return  NULL;
     }
     add_history(s);
     char* token = strtok(s," ");

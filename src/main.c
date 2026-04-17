@@ -12,9 +12,12 @@
 #include "builtins/builtins.h"
 #include "builtins/exit.h"
 
+#include "readline/history.h"
+
 
 
 int main(){
+    read_history(".iskra_hist");
     while(1){
         int saved_out = dup(1);
         int saved_in = dup(0);
@@ -23,10 +26,13 @@ int main(){
 
         user_input = recv_input(user_input);
 
+
         char **tokens = tokenize(user_input);
+        if(tokens == NULL){
+            continue;
+        }
 
         int num_tokens = count_tokens(tokens);
-        
 
         int symbol = check_tokens(tokens);
         int redirect = find_upper(tokens);
@@ -47,7 +53,7 @@ int main(){
         free(tokens);
         free(trimmed_tokens);
 
+        append_history(1,".iskra_hist");
     }
-
     return 0;
 }
